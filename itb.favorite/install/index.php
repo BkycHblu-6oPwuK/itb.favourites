@@ -5,10 +5,8 @@ use Itb\Favorite\EventHandlers;
 
 Loc::loadMessages(__FILE__);
 
-// @codingStandardsIgnoreStart
 class itb_favorite extends CModule
 {
-// @codingStandardsIgnoreEnd
     protected $ormClasses = [
         '\\Itb\\Favorite\\FavoriteTable',
     ];
