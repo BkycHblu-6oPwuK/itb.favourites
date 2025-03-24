@@ -1,43 +1,32 @@
 <?
 namespace Itb\Favorite;
 
-use Bitrix\Main\Entity;
-use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\Fields\DatetimeField;
+use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\Type\DateTime;
+use Itb\Core\BaseTable;
 
-Loc::loadMessages(__FILE__);
-
-class FavoriteTable extends Entity\DataManager
+class FavoriteTable extends BaseTable
 {
-    /**
-     * Возвращает название таблицы
-     *
-     * @return string
-     */
     public static function getTableName()
     {
         return 'itb_favorite_products';
     }
 
-    /**
-     * Возвращает структуру ОРМ-сущности
-     *
-     * @return array
-     */
     public static function getMap()
     {
         return [
-            'ID'          => new Entity\IntegerField('ID', [
+            'ID'          => new IntegerField('ID', [
                 'autocomplete' => true,
                 'primary'      => true,
             ]),
-            'FUSER_ID'    => new Entity\IntegerField('FUSER_ID', [
+            'FUSER_ID'    => new IntegerField('FUSER_ID', [
                 'required' => true,
             ]),
-            'PRODUCT_ID'  => new Entity\IntegerField('PRODUCT_ID', [
+            'PRODUCT_ID'  => new IntegerField('PRODUCT_ID', [
                 'required' => true,
             ]),
-            'INSERT_TIME' => new Entity\DatetimeField('INSERT_TIME', [
+            'INSERT_TIME' => new DatetimeField('INSERT_TIME', [
                 'default_value' => new DateTime(),
             ]),
         ];

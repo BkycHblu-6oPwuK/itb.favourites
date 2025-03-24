@@ -14,21 +14,25 @@ class FavoriteController extends Controller
         return [
             'add' => [
                 'prefilters' => [
+                    new ActionFilter\Csrf(),
                     new ActionFilter\HttpMethod([ActionFilter\HttpMethod::METHOD_POST]),
                 ],
             ],
             'delete' => [
                 'prefilters' => [
+                    new ActionFilter\Csrf(),
                     new ActionFilter\HttpMethod([ActionFilter\HttpMethod::METHOD_POST]),
                 ],
             ],
             'toggle' => [
                 'prefilters' => [
+                    new ActionFilter\Csrf(),
                     new ActionFilter\HttpMethod([ActionFilter\HttpMethod::METHOD_POST]),
                 ],
             ],
             'get' => [
                 'prefilters' => [
+                    new ActionFilter\Csrf(),
                     new ActionFilter\HttpMethod([ActionFilter\HttpMethod::METHOD_POST]),
                 ],
             ],

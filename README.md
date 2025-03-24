@@ -1,5 +1,7 @@
 # Модуль избранного
 
+для работы обязателен модуль ```itb.core```
+
 запросы кидаются на контроллер
 
 - метод добавления - /bitrix/services/main/ajax.php?action=itb:favorite.FavoriteController.add&productID={id}

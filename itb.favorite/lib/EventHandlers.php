@@ -1,7 +1,11 @@
 <?php
+
+
 namespace Itb\Favorite;
 
+
 use Bitrix\Sale\Internals\FuserTable;
+use Itb\Core\Helpers\FuserHelper;
 
 class EventHandlers
 {

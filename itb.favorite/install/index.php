@@ -1,16 +1,15 @@
 <?
+
 use Bitrix\Main\EventManager;
+use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
 use Itb\Favorite\EventHandlers;
+use Itb\Favorite\FavoriteTable;
 
 Loc::loadMessages(__FILE__);
 
 class itb_favorite extends CModule
 {
-    protected $ormClasses = [
-        '\\Itb\\Favorite\\FavoriteTable',
-    ];
-
     public function __construct()
     {
         $arModuleVersion = [];
@@ -32,7 +31,7 @@ class itb_favorite extends CModule
 
         if ($this->isVersionD7()) {
             \Bitrix\Main\ModuleManager::registerModule($this->MODULE_ID);
-
+            Loader::includeModule($this->MODULE_ID);
             $this->InstallDB();
             $this->InstallEvents();
             $this->InstallFiles();
@@ -49,7 +48,7 @@ class itb_favorite extends CModule
 
         $context = \Bitrix\Main\Context::getCurrent();
         $request = $context->getRequest();
-
+        Loader::includeModule($this->MODULE_ID);
         if ($request['step'] < 2) {
             $APPLICATION->IncludeAdminFile(Loc::getMessage('ITB_FAVORITE_UNINSTALL_TITLE'), __DIR__ . '/unstep1.php');
         } else {
@@ -67,28 +66,12 @@ class itb_favorite extends CModule
 
     public function InstallDB()
     {
-        \Bitrix\Main\Loader::includeModule($this->MODULE_ID);
-
-        foreach ($this->ormClasses as $ormClass) {
-            $instance = \Bitrix\Main\Entity\Base::getInstance($ormClass);
-
-            if (!\Bitrix\Main\Application::getConnection()->isTableExists($instance->getDBTableName())) {
-                $instance->createDbTable();
-            }
-        }
+        FavoriteTable::createTable();
     }
 
     public function UnInstallDB()
     {
-        \Bitrix\Main\Loader::includeModule($this->MODULE_ID);
-
-        foreach ($this->ormClasses as $ormClass) {
-            $instance = \Bitrix\Main\Entity\Base::getInstance($ormClass);
-
-            \Bitrix\Main\Application::getConnection()->queryExecute(
-                "DROP TABLE IF EXISTS {$instance->getDBTableName()}"
-            );
-        }
+        FavoriteTable::dropTable();
     }
 
     public function InstallEvents()

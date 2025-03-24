@@ -171,7 +171,8 @@ class Helper
     public static function isFavoriteProduct(int|array $productID, int $fUserID = 0) : array|bool
     {
         $fUserID = static::checkFuser($fUserID);
-        $result = is_array($productID) ? [] : false;
+        $productIDIsArray = is_array($productID);
+        $result = $productIDIsArray ? [] : false;
 
         $rsProducts = FavoriteTable::getList([
             'select' => [
@@ -188,7 +189,7 @@ class Helper
         ]);
 
         while ($arProduct = $rsProducts->fetch()) {
-            if (is_array($productID)) {
+            if ($productIDIsArray) {
                 $result[] = $arProduct['PRODUCT_ID'];
             } else {
                 $result = true;
